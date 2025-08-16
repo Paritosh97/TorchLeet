@@ -76,7 +76,7 @@ class VAE_ResidualBlock(nn.Module):
     
 class VAE_Decoder(nn.Sequential):
 
-    def __init__():
+    def __init__(self):
 
         super().__init__(
 
