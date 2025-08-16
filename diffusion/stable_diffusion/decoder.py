@@ -165,7 +165,7 @@ class VAE_Decoder(nn.Sequential):
         x /= 0.18215
 
         for module in self:
-            x = module(X)
+            x = module(x)
 
         # (Batch_Size, 3, Height, Weidth)
         return x

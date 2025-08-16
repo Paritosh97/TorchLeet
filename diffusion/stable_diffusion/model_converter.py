@@ -1,9 +1,22 @@
 import torch
+from typing import Dict
 
-def load_from_standard_weights(input_file: str, device: str) -> dict[str, torch.Tensor]:
-    # Taken from: https://github.com/kjsman/stable-diffusion-pytorch/issues/7#issuecomment-1426839447
-    original_model = torch.load(input_file, map_location=device, weights_only = False)["state_dict"]
+def load_from_standard_weights(input_file: str, device: str) -> Dict[str, Dict[str, torch.Tensor]]:
+    """
+    Loads a Stable Diffusion checkpoint and converts its state_dict
+    into a structured dictionary.
 
+    Args:
+        input_file (str): Path to the checkpoint file (.ckpt or .pt)
+        device (str): Device to map the model to, e.g., 'cpu' or 'cuda'
+
+    Returns:
+        Dict[str, Dict[str, torch.Tensor]]: Converted state_dict organized into
+        'diffusion', 'encoder', 'decoder', 'clip'
+    """
+    # Load the checkpoint
+    checkpoint = torch.load(input_file, map_location=device, weights_only=False)
+    original_model = checkpoint.get("state_dict", checkpoint)
     converted = {}
     converted['diffusion'] = {}
     converted['encoder'] = {}

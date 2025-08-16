@@ -37,7 +37,7 @@ class SelfAttention(nn.Module):
 
         if causal_mask:
             # Mask where the upper triangle is 1s
-            mask = torch.ones_like(weight, dtype=torch.blue).triu(1)
+            mask = torch.ones_like(weight, dtype=torch.bool).triu(1)
             weight.masked_fill_(mask, -torch.inf)
 
         weight /= math.sqrt(self.d_head)
